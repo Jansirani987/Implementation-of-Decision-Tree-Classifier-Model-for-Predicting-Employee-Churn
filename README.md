@@ -20,67 +20,55 @@ Developed by: JANSI RANI A A
 RegisterNumber:  212224040130
 
 
+import matplotlib.pyplot as plt    
+%matplotlib inline                  
+
 import pandas as pd
-data=pd.read_csv("Salary.csv")
+from sklearn.tree import DecisionTreeClassifier,plot_tree
+data=pd.read_csv(r"C:\Users\L390 Yoga\Downloads\Employee.csv")
 data.head()
 
-data.info
+data.info()
 
 data.isnull().sum()
-
+data["left"].value_counts()
 from sklearn.preprocessing import LabelEncoder
 le=LabelEncoder()
-data["Position"]=le.fit_transform(data["Position"])
+data["salary"]=le.fit_transform(data["salary"])
 data.head()
+x = data[["satisfaction_level", "last_evaluation", "number_project", "average_montly_hours",
+          "time_spend_company", "Work_accident", "promotion_last_5years", "salary"]]
+x.head() #no departments and no left
 
-x=data[["Position","Level"]]
-y=data[["Salary"]]
-
+y=data["left"]
 from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test=train_test_split(x,y,test_size=0.2,random_state=2)
-
-from sklearn.tree import DecisionTreeRegressor
-dt=DecisionTreeRegressor()
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=100)
+from sklearn.tree import DecisionTreeClassifier
+dt=DecisionTreeClassifier(criterion="entropy")
 dt.fit(x_train,y_train)
 y_pred=dt.predict(x_test)
-
 from sklearn import metrics
-mse=metrics.mean_squared_error(y_test, y_pred)
-mse
+accuracy=metrics.accuracy_score(y_test,y_pred)
+accuracy
 
-r2=metrics.r2_score(y_test,y_pred)
-r2
+dt.predict([[0.5,0.8,9,260,6,0,1,2]])
+plt.figure(figsize=(15,10))
+plot_tree(dt,
+          feature_names=x.columns,
+          class_names=['stayed','left'],
+          filled=True)
 
-dt.predict([[5,6]])
-
-
-```
+plt.show()
 
 ## Output:
 
-## Data head:
+<img width="1318" height="364" alt="image" src="https://github.com/user-attachments/assets/7b290aef-a3cb-4b9f-b59c-ea34c6b8603f" />
 
-<img width="319" height="245" alt="Screenshot (775)" src="https://github.com/user-attachments/assets/987cb16a-6bef-4c05-aaba-18a04b307fb0" />
+<img width="1290" height="373" alt="image" src="https://github.com/user-attachments/assets/f104f10f-dba8-4ac5-b7ce-eb9ea2aca927" />
 
-## Data info:
 
-<img width="670" height="256" alt="Screenshot (776)" src="https://github.com/user-attachments/assets/1765e029-1de6-4ba3-8012-0098ec8525bd" />
+<img width="1285" height="267" alt="image" src="https://github.com/user-attachments/assets/ff381d6b-7e53-4c9b-8d88-6770bc0c3f14" />
 
-## isnull() sum():
-
-<img width="179" height="104" alt="Screenshot (777)" src="https://github.com/user-attachments/assets/defd3abf-bb31-46cf-9981-73e4f0764cb0" />
-
-## Mean squared error:
-
-<img width="253" height="47" alt="Screenshot (778)" src="https://github.com/user-attachments/assets/598cfd06-092e-48e3-bf3f-f74861465e22" />
-
-## r2 value:
-
-<img width="299" height="39" alt="Screenshot (779)" src="https://github.com/user-attachments/assets/314774d9-3590-4f08-867d-5c43a4181b05" />
-
-## data prediction:
-
-<img width="230" height="37" alt="Screenshot (780)" src="https://github.com/user-attachments/assets/c57e5c64-b2ec-4943-9682-31171a9703b1" />
 
 
 ## Result:
