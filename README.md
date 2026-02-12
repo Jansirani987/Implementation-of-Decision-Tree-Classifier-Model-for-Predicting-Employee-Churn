@@ -30,8 +30,8 @@ Anaconda – Python 3.7 Installation / Jupyter notebook
 ## Program:
 Program to implement the Decision Tree Classifier Model for Predicting Employee Churn.
 
-## Developed by: NITHYASREE S
-## RegisterNumber:212224040225
+ Developed by: JANSI RANI A A
+ RegisterNumber:212224040130
 
 ```PYTHON
 import matplotlib.pyplot as plt    
